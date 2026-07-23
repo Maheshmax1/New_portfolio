@@ -26,6 +26,13 @@ export default function DarkTheme({ data }: ThemeProps) {
   const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
+  const getAssetPath = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http") || path.startsWith("data:")) return path;
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
 
   useEffect(() => {
@@ -108,7 +115,7 @@ export default function DarkTheme({ data }: ThemeProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={profileImageIndex}
-              src={profileImages[profileImageIndex]}
+              src={getAssetPath(profileImages[profileImageIndex])}
               alt={data.hero.name}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -126,7 +133,7 @@ export default function DarkTheme({ data }: ThemeProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={profileImageIndex}
-              src={profileImages[profileImageIndex]}
+              src={getAssetPath(profileImages[profileImageIndex])}
               alt="About"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -205,7 +212,7 @@ export default function DarkTheme({ data }: ThemeProps) {
           {displayedProjects.map((project) => (
             <div key={project.id} className="bg-[#0d0d0d] border border-purple-500/10 rounded flex flex-col justify-between overflow-hidden">
               <div className="h-44 w-full bg-[#111] overflow-hidden">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover object-top filter grayscale contrast-125 hover:filter-none transition duration-500" />
+                <img src={getAssetPath(project.image)} alt={project.title} className="w-full h-full object-cover object-top filter grayscale contrast-125 hover:filter-none transition duration-500" />
               </div>
               <div className="p-6 space-y-4">
                 <div>

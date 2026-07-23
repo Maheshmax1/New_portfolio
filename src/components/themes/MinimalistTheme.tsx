@@ -22,6 +22,13 @@ export default function MinimalistTheme({ data }: ThemeProps) {
   const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
+  const getAssetPath = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http") || path.startsWith("data:")) return path;
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
 
   useEffect(() => {
@@ -101,7 +108,7 @@ export default function MinimalistTheme({ data }: ThemeProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={profileImageIndex}
-              src={profileImages[profileImageIndex]}
+              src={getAssetPath(profileImages[profileImageIndex])}
               alt="Biography"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -166,7 +173,7 @@ export default function MinimalistTheme({ data }: ThemeProps) {
           {displayedProjects.map((project) => (
             <div key={project.id} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
               <div className="h-60 w-full bg-neutral-50 overflow-hidden relative border border-neutral-200">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500" />
+                <img src={getAssetPath(project.image)} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500" />
               </div>
               <div className="space-y-4">
                 <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">{project.category}</span>

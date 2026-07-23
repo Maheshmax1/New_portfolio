@@ -35,6 +35,13 @@ export default function AppleTheme({ data }: ThemeProps) {
   const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
+  const getAssetPath = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http") || path.startsWith("data:")) return path;
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
 
   useEffect(() => {
@@ -144,7 +151,7 @@ export default function AppleTheme({ data }: ThemeProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={profileImageIndex}
-              src={profileImages[profileImageIndex]}
+              src={getAssetPath(profileImages[profileImageIndex])}
               alt={data.hero.name}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -163,8 +170,8 @@ export default function AppleTheme({ data }: ThemeProps) {
             <AnimatePresence mode="wait">
               <motion.img
                 key={profileImageIndex}
-                src={profileImages[profileImageIndex]}
-                alt="Biography"
+                src={getAssetPath(profileImages[profileImageIndex])}
+                alt="About"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -279,7 +286,7 @@ export default function AppleTheme({ data }: ThemeProps) {
               >
                 <div className="h-48 w-full bg-[#f5f5f7] overflow-hidden relative">
                   <img
-                    src={project.image}
+                    src={getAssetPath(project.image)}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />

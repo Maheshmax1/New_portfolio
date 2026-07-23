@@ -23,6 +23,13 @@ export default function CreativeTheme({ data }: ThemeProps) {
   const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
+  const getAssetPath = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http") || path.startsWith("data:")) return path;
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
 
   useEffect(() => {
@@ -103,7 +110,7 @@ export default function CreativeTheme({ data }: ThemeProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={profileImageIndex}
-              src={profileImages[profileImageIndex]}
+              src={getAssetPath(profileImages[profileImageIndex])}
               alt={data.hero.name}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -121,7 +128,7 @@ export default function CreativeTheme({ data }: ThemeProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={profileImageIndex}
-              src={profileImages[profileImageIndex]}
+              src={getAssetPath(profileImages[profileImageIndex])}
               alt="Biography"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -200,7 +207,7 @@ export default function CreativeTheme({ data }: ThemeProps) {
           {displayedProjects.map((project) => (
             <div key={project.id} className="bg-white border-4 border-black rounded-none flex flex-col justify-between overflow-hidden shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 transition duration-200">
               <div className="h-44 w-full bg-[#eee] overflow-hidden border-b-2 border-black">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                <img src={getAssetPath(project.image)} alt={project.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-6 space-y-4">
                 <div>

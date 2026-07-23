@@ -23,6 +23,13 @@ export default function DeveloperTheme({ data }: ThemeProps) {
   const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
+  const getAssetPath = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http") || path.startsWith("data:")) return path;
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
 
   useEffect(() => {
@@ -134,7 +141,7 @@ export default function DeveloperTheme({ data }: ThemeProps) {
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={profileImageIndex}
-                    src={profileImages[profileImageIndex]}
+                    src={getAssetPath(profileImages[profileImageIndex])}
                     alt="Mahesh Profile"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
