@@ -1,0 +1,178 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// User model for Authentication
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed password
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+// Global Site Settings & Active Theme
+model SiteSettings {
+  id              String   @id @default("singleton")
+  websiteName     String   @default("My Portfolio CMS")
+  logo            String?  // Cloudinary URL or local path
+  favicon         String?  // Cloudinary URL or local path
+  metaTitle       String   @default("My Premium Portfolio")
+  metaDescription String   @default("Welcome to my professional portfolio website.")
+  themeColor      String   @default("#3b82f6") // Default blue
+  selectedTheme   String   @default("apple")   // active theme slug
+  darkMode        Boolean  @default(true)
+  analyticsId     String?  // Google Analytics ID
+  customCss       String?
+  customJs        String?
+  updatedAt       DateTime @updatedAt
+}
+
+// Hero Section Content
+model Hero {
+  id              String   @id @default("singleton")
+  profileImage    String?
+  backgroundImage String?
+  backgroundVideo String?
+  name            String   @default("Alex Rivers")
+  role            String   @default("Lead Interactive Developer")
+  tagline         String   @default("Sculpting immersive digital experiences through code & design.")
+  description     String   @default("I am a design-minded developer specializing in high-performance web applications and beautiful animations.")
+  resumeUrl       String?
+  hireMeUrl       String?
+  typingWords     String   @default("Creative Developer,UI/UX Designer,Next.js Expert") // Comma separated
+}
+
+// About Section Content
+model About {
+  id              String   @id @default("singleton")
+  photo           String?
+  description     String   @default("I bridge the gap between design and technology. I build products that are fast, accessible, and delightful to interact with.")
+  experienceYears Int      @default(6)
+  education       String   @default("B.S. in Computer Science - Stanford University")
+  mission         String   @default("To empower brands with state-of-the-art web performance and visually stunning user interfaces.")
+  vision          String   @default("To redefine how interactive design is consumed across modern web devices.")
+  cvUrl           String?
+}
+
+// Services CRUD
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  icon        String   // Lucide icon name
+  order       Int      @default(0)
+  status      Boolean  @default(true)
+}
+
+// Skills CRUD
+model Skill {
+  id          String   @id @default(uuid())
+  name        String
+  percentage  Int      @default(100)
+  category    String   @default("Frontend") // Frontend, Backend, Design
+  color       String   @default("#3b82f6")
+}
+
+// Projects CRUD
+model Project {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  image          String   // main cover image
+  gallery        String   @default("[]") // JSON Array string of secondary images
+  technologies   String   // Comma separated e.g. "React,Next.js,Prisma"
+  features       String   @default("") // New line separated features
+  category       String   @default("Web Development")
+  githubUrl      String?
+  liveUrl        String?
+  client         String?
+  completionDate String?  // String format or Date
+}
+
+// Why Choose Me Section
+model WhyChooseMe {
+  id          String   @id @default(uuid())
+  icon        String   // Lucide icon
+  title       String
+  description String
+}
+
+// Work Process Steps
+model WorkProcess {
+  id          String   @id @default(uuid())
+  icon        String   // Lucide icon
+  title       String
+  description String
+  order       Int      @default(0)
+}
+
+// Testimonials CRUD
+model Testimonial {
+  id          String   @id @default(uuid())
+  photo       String?
+  clientName  String
+  company     String?
+  designation String?
+  rating      Int      @default(5)
+  review      String
+}
+
+// Achievements CRUD
+model Achievement {
+  id      String @id @default(uuid())
+  icon    String // Lucide icon
+  title   String
+  counter Int    @default(0)
+}
+
+// Pricing Plans CRUD
+model PricingPlan {
+  id        String   @id @default(uuid())
+  name      String   // Basic, Pro, Enterprise
+  price     String   // e.g. "$49" or "Custom"
+  features  String   // New line separated
+  buttonText String  @default("Get Started")
+  isPopular Boolean  @default(false)
+}
+
+// FAQs CRUD
+model FAQ {
+  id       String @id @default(uuid())
+  question String
+  answer   String
+}
+
+// Blog Posts CRUD
+model BlogPost {
+  id             String   @id @default(uuid())
+  title          String
+  coverImage     String
+  content        String
+  category       String
+  tags           String   // Comma separated
+  date           String   // Date string
+  seoTitle       String?
+  seoDescription String?
+}
+
+// Contact Details
+model ContactDetails {
+  id        String  @id @default("singleton")
+  phone     String?
+  email     String?
+  whatsapp  String?
+  address   String?
+  mapIframe String?
+  // Social links
+  github    String?
+  linkedin  String?
+  twitter   String?
+  instagram String?
+  youtube   String?
+}

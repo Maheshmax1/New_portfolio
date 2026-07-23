@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+.font-lora {
+  font-family: 'Lora', Georgia, serif !important;
+}
+
+.font-fira {
+  font-family: 'Fira Code', Courier, monospace !important;
+}
+
+.font-space {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif !important;
+}
