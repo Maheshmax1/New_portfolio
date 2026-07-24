@@ -122,20 +122,7 @@ export const portfolioData: PortfolioData = {
       client: "Eco Clean Ltd",
       completionDate: "2026",
     },
-    {
-      id: "p2",
-      title: "EV Rental Management System",
-      description: "A centralized software platform designed to manage electric vehicle rentals, track battery status, handle booking invoices, and monitor fleet locations.",
-      image: "/ev_rental.png",
-      gallery: "[]",
-      technologies: "React, Node.js, Express, MongoDB, Tailwind",
-      features: "Real-time battery and range tracker\nBilling and automated PDF invoicing\nDynamic map fleet monitoring",
-      category: "Web App",
-      githubUrl: "",
-      liveUrl: "https://ev-rental-management.vercel.app",
-      client: "Volt Rentals Chennai",
-      completionDate: "2026",
-    },
+
     {
       id: "p3",
       title: "Paint Shop Website",
