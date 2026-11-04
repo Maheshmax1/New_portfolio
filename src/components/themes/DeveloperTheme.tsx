@@ -261,7 +261,7 @@ export default function DeveloperTheme({ data }: ThemeProps) {
           {data.workProcess.map((item) => (
             <div key={item.id} className="space-y-1 relative">
               <span className="text-[#39ff14] font-bold text-xs">
-                [{item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order}]
+                [{item.period || (item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order)}]
               </span>
               <h3 className="font-bold text-white text-xs uppercase inline-block ml-2">- {item.title}</h3>
               <p className="text-xs text-[#888] pl-16 leading-relaxed">{item.description}</p>

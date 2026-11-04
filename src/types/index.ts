@@ -91,6 +91,7 @@ export interface WorkProcess {
   title: string;
   description: string;
   order: number;
+  period?: string;
 }
 
 export interface Testimonial {

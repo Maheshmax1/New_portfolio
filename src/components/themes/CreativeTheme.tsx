@@ -252,7 +252,7 @@ export default function CreativeTheme({ data }: ThemeProps) {
             <div key={item.id} className="p-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
               <div className="space-y-3">
                 <span className="inline-block bg-yellow-400 border-2 border-black text-black font-black text-xs px-2.5 py-1 uppercase tracking-wider">
-                  {item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order}
+                  {item.period || (item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order)}
                 </span>
                 <h3 className="font-extrabold text-black text-sm uppercase tracking-wide pt-2">{item.title}</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-semibold">{item.description}</p>

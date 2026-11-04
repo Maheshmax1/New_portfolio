@@ -213,7 +213,7 @@ export default function MinimalistTheme({ data }: ThemeProps) {
           {data.workProcess.map((item) => (
             <div key={item.id} className="flex flex-col md:flex-row gap-4 border-l border-neutral-200 pl-4 py-1">
               <div className="md:w-32 font-bold text-xs uppercase tracking-widest text-neutral-500">
-                {item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order}
+                {item.period || (item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order)}
               </div>
               <div className="space-y-1 flex-1">
                 <h3 className="font-bold text-sm text-neutral-900">{item.title}</h3>

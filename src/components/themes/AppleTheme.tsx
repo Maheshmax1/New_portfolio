@@ -375,7 +375,7 @@ export default function AppleTheme({ data }: ThemeProps) {
                 </div>
                 <div className="bg-white border border-zinc-200/50 rounded-2xl p-6 shadow-sm space-y-2">
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#0071e3] bg-blue-50 px-2 py-0.5 rounded">
-                    {item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order}
+                    {item.period || (item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order)}
                   </span>
                   <h3 className="font-bold text-sm text-[#1d1d1f]">{item.title}</h3>
                   <p className="text-xs text-slate-500 leading-relaxed">{item.description}</p>

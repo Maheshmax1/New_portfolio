@@ -258,7 +258,7 @@ export default function DarkTheme({ data }: ThemeProps) {
               <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_4px_rgba(168,85,247,0.3)]" />
               <div className="bg-[#0d0d0d] border border-purple-500/10 rounded p-6 space-y-2">
                 <span className="text-[10px] font-bold text-purple-400 bg-purple-950/30 px-2 py-0.5 rounded border border-purple-500/20">
-                  {item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order}
+                  {item.period || (item.order === 2027 ? "2026 - Present" : item.order === 2021 ? "2021 - 2023" : item.order === 2025 ? "2025 - 2026" : item.order)}
                 </span>
                 <h3 className="font-bold text-sm text-white uppercase tracking-wider">{item.title}</h3>
                 <p className="text-xs text-[#808080] leading-relaxed">{item.description}</p>
