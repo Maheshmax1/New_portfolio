@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PortfolioData } from "@/types";
 import TypingEffect from "../shared/TypingEffect";
+import InteractiveHeroPhoto from "../shared/InteractiveHeroPhoto";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -20,24 +21,14 @@ interface ThemeProps {
 
 export default function CreativeTheme({ data }: ThemeProps) {
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
   const getAssetPath = (path: string) => {
-    if (!path) return "";
+    if (!path) return "/profile.jpg";
     if (path.startsWith("http") || path.startsWith("data:")) return path;
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
     return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
   };
-
-  const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProfileImageIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,37 +97,21 @@ export default function CreativeTheme({ data }: ThemeProps) {
             </a>
           </div>
         </div>
-        <div className="w-full md:w-[350px] h-[350px] border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rotate-[1.5deg] overflow-hidden relative">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={profileImageIndex}
-              src={getAssetPath(profileImages[profileImageIndex])}
-              alt={data.hero.name}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="w-full h-full object-cover object-top"
-            />
-          </AnimatePresence>
-        </div>
+        <InteractiveHeroPhoto
+          src={data.hero.profileImage || "/profile.jpg"}
+          alt={data.hero.name}
+          theme="creative"
+        />
       </section>
 
       {/* 3. About */}
       <section id="about" className="py-24 px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 border-t-4 border-black">
         <div className="w-full h-[480px] border-4 border-black shadow-[8px_8px_0px_0px_rgba(236,72,153,1)] rotate-[-1deg] overflow-hidden relative bg-white">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={profileImageIndex}
-              src={getAssetPath(profileImages[profileImageIndex])}
-              alt="Biography"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="w-full h-full object-cover object-top"
-            />
-          </AnimatePresence>
+          <img
+            src={getAssetPath(data.about.photo || "/profile.jpg")}
+            alt="Biography"
+            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+          />
         </div>
         <div className="space-y-6 flex flex-col justify-center">
           <span className="text-xs uppercase tracking-widest font-black text-pink-500">My Story</span>

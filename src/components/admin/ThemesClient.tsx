@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { applyTheme } from "@/lib/actions/portfolio";
-import { Check, Palette, Sparkles, Layout, Code, Terminal, FileText, ArrowUpRight } from "lucide-react";
+import { Check, Palette, Sparkles, Layout, Code, Terminal, FileText, ArrowUpRight, Disc } from "lucide-react";
 
 interface ThemeMeta {
   slug: string;
@@ -21,6 +21,14 @@ const themes: ThemeMeta[] = [
     tags: ["Minimal", "Glassmorphism", "White Theme", "Immersive"],
     gradient: "from-slate-100 to-zinc-200 text-slate-800",
     icon: Layout,
+  },
+  {
+    slug: "3d",
+    name: "3D (Akira Vinyl)",
+    description: "Award-winning WebGL 3D design inspired by mindofakira.com. Features interactive 3D vinyl turntable, real-time audio scratching, Side A/Side B flip, and lo-fi audio player dock.",
+    tags: ["Three.js", "3D Vinyl", "Awwwards Style", "Web Audio", "Cyberpunk"],
+    gradient: "from-[#ff0044] via-zinc-900 to-black text-white border-[#ff0044]/40",
+    icon: Disc,
   },
   {
     slug: "corporate",

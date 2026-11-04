@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PortfolioData } from "@/types";
 import TypingEffect from "../shared/TypingEffect";
+import InteractiveHeroPhoto from "../shared/InteractiveHeroPhoto";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -19,24 +20,14 @@ interface ThemeProps {
 
 export default function MinimalistTheme({ data }: ThemeProps) {
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
   const getAssetPath = (path: string) => {
-    if (!path) return "";
+    if (!path) return "/profile.jpg";
     if (path.startsWith("http") || path.startsWith("data:")) return path;
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
     return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
   };
-
-  const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProfileImageIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,46 +68,51 @@ export default function MinimalistTheme({ data }: ThemeProps) {
       </header>
 
       {/* 2. Hero */}
-      <section className="py-28 px-6 max-w-4xl mx-auto space-y-8">
-        <h1 className="text-5xl md:text-7xl font-extrabold text-neutral-900 leading-tight tracking-tight">
-          Hello. I am {data.hero.name}.
-          <br />
-          <span className="text-neutral-400">
-            <TypingEffect wordsString={data.hero.typingWords} />
-          </span>
-        </h1>
-        <p className="text-xl text-neutral-600 leading-relaxed font-light max-w-2xl italic">
-          {data.hero.tagline}
-        </p>
-        <p className="text-sm text-neutral-500 leading-relaxed font-sans max-w-xl">
-          {data.hero.description}
-        </p>
-        <div className="pt-6 font-sans">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 bg-neutral-900 text-white font-semibold py-3.5 px-8 rounded hover:bg-neutral-800 transition"
-          >
-            Start Project
-            <ArrowRight className="w-4 h-4" />
-          </a>
+      <section className="py-28 px-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          <div className="md:col-span-7 space-y-8">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-neutral-900 leading-tight tracking-tight">
+              Hello. I am {data.hero.name}.
+              <br />
+              <span className="text-neutral-400">
+                <TypingEffect wordsString={data.hero.typingWords} />
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed font-light italic">
+              {data.hero.tagline}
+            </p>
+            <p className="text-sm text-neutral-500 leading-relaxed font-sans max-w-xl">
+              {data.hero.description}
+            </p>
+            <div className="pt-2 font-sans">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 bg-neutral-900 text-white font-semibold py-3.5 px-8 rounded hover:bg-neutral-800 transition"
+              >
+                Start Project
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          <div className="md:col-span-5 flex justify-center">
+            <InteractiveHeroPhoto
+              src={data.hero.profileImage || "/profile.jpg"}
+              alt={data.hero.name}
+              theme="minimalist"
+            />
+          </div>
         </div>
       </section>
 
       {/* 3. About */}
       <section id="about" className="py-24 px-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-neutral-100">
         <div className="w-full h-[480px] overflow-hidden bg-neutral-50 relative border border-neutral-200">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={profileImageIndex}
-              src={getAssetPath(profileImages[profileImageIndex])}
-              alt="Biography"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="w-full h-full object-cover object-top grayscale"
-            />
-          </AnimatePresence>
+          <img
+            src={getAssetPath(data.about.photo || "/profile.jpg")}
+            alt="Biography"
+            className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
+          />
         </div>
         <div className="space-y-6 flex flex-col justify-center">
           <span className="text-xs uppercase tracking-widest font-sans font-bold text-neutral-400">Biography</span>

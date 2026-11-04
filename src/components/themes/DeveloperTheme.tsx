@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PortfolioData } from "@/types";
 import TypingEffect from "../shared/TypingEffect";
+import InteractiveHeroPhoto from "../shared/InteractiveHeroPhoto";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -20,24 +21,14 @@ interface ThemeProps {
 
 export default function DeveloperTheme({ data }: ThemeProps) {
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [profileImageIndex, setProfileImageIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
   const getAssetPath = (path: string) => {
-    if (!path) return "";
+    if (!path) return "/profile.jpg";
     if (path.startsWith("http") || path.startsWith("data:")) return path;
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
     return `${basePath}${path.startsWith("/") ? "" : "/"}${path}`;
   };
-
-  const profileImages = ["/profile_striped.jpg", "/profile_freshworks.jpg"];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProfileImageIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,46 +71,58 @@ export default function DeveloperTheme({ data }: ThemeProps) {
       </header>
 
       {/* 2. Hero */}
-      <section className="py-24 px-6 max-w-5xl mx-auto space-y-6">
-        <div className="text-xs text-[#555] font-semibold">
-          Last login: {new Date().toDateString()} on ttys001
-        </div>
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 text-xs text-[#888]">
-            <span className="text-[#39ff14]">$</span> whoami
-          </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
-            {data.hero.name}: ~
-            <br />
-            <span className="text-[#39ff14]">
-              <TypingEffect wordsString={data.hero.typingWords} />
-            </span>
-          </h1>
-        </div>
+      <section className="py-24 px-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+          <div className="md:col-span-7 space-y-6">
+            <div className="text-xs text-[#555] font-semibold">
+              Last login: {new Date().toDateString()} on ttys001
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-xs text-[#888]">
+                <span className="text-[#39ff14]">$</span> whoami
+              </div>
+              <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+                {data.hero.name}: ~
+                <br />
+                <span className="text-[#39ff14]">
+                  <TypingEffect wordsString={data.hero.typingWords} />
+                </span>
+              </h1>
+            </div>
 
-        <div className="space-y-4 pt-4 border-l border-[#39ff14]/10 pl-6">
-          <div className="flex items-center gap-2 text-xs text-[#888]">
-            <span className="text-[#39ff14]">$</span> cat tagline.txt
-          </div>
-          <p className="text-sm md:text-base text-[#a0a5b5] leading-relaxed italic">
-            "{data.hero.tagline}"
-          </p>
-          
-          <div className="flex items-center gap-2 text-xs text-[#888] pt-4">
-            <span className="text-[#39ff14]">$</span> cat biography.log
-          </div>
-          <p className="text-xs text-[#888] leading-relaxed max-w-2xl">
-            {data.hero.description}
-          </p>
-        </div>
+            <div className="space-y-4 pt-4 border-l border-[#39ff14]/10 pl-6">
+              <div className="flex items-center gap-2 text-xs text-[#888]">
+                <span className="text-[#39ff14]">$</span> cat tagline.txt
+              </div>
+              <p className="text-sm md:text-base text-[#a0a5b5] leading-relaxed italic">
+                "{data.hero.tagline}"
+              </p>
+              
+              <div className="flex items-center gap-2 text-xs text-[#888] pt-4">
+                <span className="text-[#39ff14]">$</span> cat biography.log
+              </div>
+              <p className="text-xs text-[#888] leading-relaxed max-w-2xl">
+                {data.hero.description}
+              </p>
+            </div>
 
-        <div className="flex flex-wrap gap-4 pt-8">
-          <a
-            href="#contact"
-            className="bg-[#39ff14]/10 hover:bg-[#39ff14]/20 border border-[#39ff14]/40 text-[#39ff14] font-bold py-3.5 px-6 rounded text-xs transition"
-          >
-            ./initialize_contact.sh
-          </a>
+            <div className="flex flex-wrap gap-4 pt-6">
+              <a
+                href="#contact"
+                className="bg-[#39ff14]/10 hover:bg-[#39ff14]/20 border border-[#39ff14]/40 text-[#39ff14] font-bold py-3.5 px-6 rounded text-xs transition"
+              >
+                ./initialize_contact.sh
+              </a>
+            </div>
+          </div>
+
+          <div className="md:col-span-5 flex justify-center">
+            <InteractiveHeroPhoto
+              src={data.hero.profileImage || "/profile.jpg"}
+              alt={data.hero.name}
+              theme="developer"
+            />
+          </div>
         </div>
       </section>
 
@@ -138,18 +141,11 @@ export default function DeveloperTheme({ data }: ThemeProps) {
                 <span className="w-2 h-2 rounded-full bg-[#27c93f]" />
               </div>
               <div className="w-full h-full pt-6">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={profileImageIndex}
-                    src={getAssetPath(profileImages[profileImageIndex])}
-                    alt="Mahesh Profile"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full h-full object-cover object-top grayscale opacity-80"
-                  />
-                </AnimatePresence>
+                <img
+                  src={getAssetPath(data.about.photo || "/profile.jpg")}
+                  alt="Mahesh Profile"
+                  className="w-full h-full object-cover object-top grayscale hover:grayscale-0 opacity-90 hover:opacity-100 transition-all duration-500"
+                />
               </div>
             </div>
             <div className="p-4 bg-[#080b12] border border-[#39ff14]/10 text-xs text-[#888] space-y-2">
