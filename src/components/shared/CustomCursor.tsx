@@ -229,49 +229,6 @@ export default function CustomCursor({ activeTheme }: CustomCursorProps) {
           />
         </>
       )}
-
-      {/* ================= 6. 3D AKIRA VINYL DUBPLATE CURSOR ================= */}
-      {activeTheme === "3d" && (
-        <>
-          {/* Rotating Vinyl Grooves Ring */}
-          <motion.div
-            style={{
-              x: smoothX,
-              y: smoothY,
-              translateX: "-50%",
-              translateY: "-50%",
-            }}
-            animate={{
-              width: isHovering ? 54 : 34,
-              height: isHovering ? 54 : 34,
-              borderColor: isHovering ? "#ff0044" : "rgba(255, 0, 68, 0.6)",
-              rotate: isHovering ? 180 : 0,
-            }}
-            transition={{ type: "spring", stiffness: 350, damping: 20 }}
-            className="rounded-full border-2 border-dashed border-[#ff0044] shadow-[0_0_20px_rgba(255,0,68,0.5)] flex items-center justify-center pointer-events-none"
-          >
-            {isHovering && (
-              <span className="text-[8px] font-mono font-black text-[#ffe600] uppercase tracking-tighter">
-                33 RPM
-              </span>
-            )}
-          </motion.div>
-          {/* Needle Center Stylus Laser */}
-          <motion.div
-            style={{
-              x: cursorX,
-              y: cursorY,
-              translateX: "-50%",
-              translateY: "-50%",
-            }}
-            animate={{
-              scale: isHovering ? 1.6 : 1,
-              backgroundColor: isHovering ? "#ffe600" : "#ff0044",
-            }}
-            className="w-2 h-2 rounded-full shadow-[0_0_10px_#ff0044]"
-          />
-        </>
-      )}
     </div>
   );
 }

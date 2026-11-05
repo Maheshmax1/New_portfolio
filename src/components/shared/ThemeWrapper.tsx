@@ -9,7 +9,6 @@ import MinimalistTheme from "../themes/MinimalistTheme";
 import CreativeTheme from "../themes/CreativeTheme";
 import DeveloperTheme from "../themes/DeveloperTheme";
 import DarkTheme from "../themes/DarkTheme";
-import ThreeDTheme from "../themes/ThreeDTheme";
 import CustomCursor from "./CustomCursor";
 
 interface ThemeWrapperProps {
@@ -23,7 +22,6 @@ const THEMES = [
   { slug: "creative", name: "Creative Art", icon: "🎨", color: "bg-pink-500 border-yellow-400" },
   { slug: "developer", name: "Dev Console", icon: "💻", color: "bg-[#0b0f19] border-[#39ff14]/30" },
   { slug: "dark", name: "Dark Neon", icon: "🌙", color: "bg-purple-950 border-purple-500" },
-  { slug: "3d", name: "3D (Akira)", icon: "💿", color: "bg-[#ff0044] border-yellow-400 text-white" },
 ];
 
 export default function ThemeWrapper({ data, initialTheme }: ThemeWrapperProps) {
@@ -63,8 +61,6 @@ export default function ThemeWrapper({ data, initialTheme }: ThemeWrapperProps) 
         return <DeveloperTheme data={data} />;
       case "dark":
         return <DarkTheme data={data} />;
-      case "3d":
-        return <ThreeDTheme data={data} />;
       default:
         return <AppleTheme data={data} />;
     }
